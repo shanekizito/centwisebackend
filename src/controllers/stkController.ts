@@ -23,18 +23,11 @@ const handleStkPush = async (req: RequestExtended, res: Response) => {
       throw new Error("Missing MPESA configuration in environment variables");
     }
 
-    // Start ngrok and fetch callback URL
-    const callback_url = await ngrok.connect(PORT);
-    const api = ngrok.getApi();
+   
 
-    if (!api) {
-      throw new Error("Failed to fetch ngrok API client");
-    }
+   
 
-    const tunnels = await api.listTunnels();
-    console.log("Active ngrok tunnels:", tunnels);
-
-    const CALLBACK_URL = `${callback_url}/payment-callback/`;
+    const CALLBACK_URL = `https://centwisebackend.onrender.com/payment-callback/`;
 
     // Correct timestamp generation
     const currentTimestamp = timestamp(); // Must return 'YYYYMMDDHHMMSS'
