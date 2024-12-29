@@ -15,7 +15,7 @@ export const generateToken = async (
   const CONSUMER_SECRET = process.env.MPESA_CONSUMER_SECRET as string;
 
   const URL =
-    "https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
+    "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
 
   const auth = Buffer.from(`${CONSUMER_KEY}:${CONSUMER_SECRET}`).toString(
     "base64"
