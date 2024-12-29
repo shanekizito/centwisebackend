@@ -60,7 +60,7 @@ const handleStkPush = async (req: RequestExtended, res: Response) => {
     console.log("Token:", req.token);
 
     const response = await axios.post(
-      "https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest",
+      "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest",
       payload,
       {
         headers: {
