@@ -6,7 +6,7 @@ import { paymentCallback } from "../controllers/callbackController";
 const router = express.Router();
 
 // Middleware chain: Generate token first, then handle STK push
-router.get("/stkpush", generateToken, handleStkPush);
+router.post("/stkpush", generateToken, handleStkPush);
 
 
 
