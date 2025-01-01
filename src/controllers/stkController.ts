@@ -29,11 +29,12 @@ const handleStkPush = async (req: RequestExtended, res: Response) => {
 
   try {
     const response = await axios.post(
-      "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest",
+      "https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest",
       payload,
       {
         headers: {
           Authorization: `Bearer ${req.token}`,
+          
         },
       }
     );
