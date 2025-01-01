@@ -10,7 +10,7 @@ export const paymentCallback = async (
   try {
     const Timestampstring = timestamp();
 
-    const encodingPassword = `5477602${process.env.MPESA_PASS_KEY}${Timestampstring}`;
+    const encodingPassword = `174379${process.env.MPESA_PASS_KEY}${Timestampstring}`;
     const base64PasswordEncoded = Buffer.from(encodingPassword).toString("base64");
 
     const { CheckoutRequestID } = req.body;
