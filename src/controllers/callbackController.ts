@@ -10,7 +10,7 @@ export const paymentCallback = async (
   try {
     const Timestampstring = timestamp();
 
-    const encodingPassword = `174379${process.env.MPESA_PASS_KEY}${Timestampstring}`;
+    const encodingPassword = `5477602${process.env.MPESA_PASS_KEY}${Timestampstring}`;
     const base64PasswordEncoded = Buffer.from(encodingPassword).toString("base64");
 
     const { CheckoutRequestID } = req.body;
@@ -23,7 +23,7 @@ export const paymentCallback = async (
     console.log("STK Push Payload:", req.token);
 
     const response = await axios.post(
-      "https://sandbox.safaricom.co.ke/mpesa/stkpushquery/v1/query",
+      "https://api.safaricom.co.ke/mpesa/stkpushquery/v1/query",
       {
         BusinessShortCode: BUSINESS_SHORT_CODE,
         Password: base64PasswordEncoded,
