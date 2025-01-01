@@ -33,8 +33,8 @@ const handleStkPush = async (req: RequestExtended, res: Response) => {
       payload,
       {
         headers: {
-          Authorization: `Bearer ${req.token}`,
-          
+         "Content-Type": "application/json",
+          Authorization: `Bearer ${req.token}`
         },
       }
     );
