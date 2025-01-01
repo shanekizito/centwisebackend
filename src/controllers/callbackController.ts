@@ -8,7 +8,7 @@ export const paymentCallback = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const Timestampstring = timestamp();
+    const Timestampstring = timestamp
 
     const encodingPassword = `174379${process.env.MPESA_PASS_KEY}${Timestampstring}`;
     const base64PasswordEncoded = Buffer.from(encodingPassword).toString("base64");
