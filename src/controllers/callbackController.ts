@@ -23,7 +23,7 @@ export const paymentCallback = async (
     console.log("STK Push Payload:", req.token);
 
     const response = await axios.post(
-      "https://sandbox.safaricom.co.ke/mpesa/stkpushquery/v1/query",
+      "https://api.safaricom.co.ke/mpesa/stkpushquery/v1/query",
       {
         BusinessShortCode: BUSINESS_SHORT_CODE,
         Password: base64PasswordEncoded,
