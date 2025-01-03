@@ -23,7 +23,7 @@ const handleStkPush = async (req: RequestExtended, res: Response) => {
     PartyB: process.env.MPESA_BUSINESS_SHORT_CODE,
     PhoneNumber: phone,
     CallBackURL: "https://centwisebackend.onrender.com/payment-callback/",
-    AccountReference: "Centwise Investments",
+    AccountReference: phone,
     TransactionDesc: "Payment",
   };
 
