@@ -2,7 +2,6 @@ import axios from "axios";
 import { Response } from "express";
 import { timestamp } from "../../utils/timeStamp";
 import { RequestExtended } from "../middlewares/generateToken";
-import { getNgrokUrl } from "../../utils/ngrokManager";
 
 const handleStkPush = async (req: RequestExtended, res: Response) => {
   try {
@@ -14,22 +13,13 @@ const handleStkPush = async (req: RequestExtended, res: Response) => {
 
     const BUSINESS_SHORT_CODE = process.env.MPESA_BUSINESS_SHORT_CODE || "";
     const PASS_KEY = process.env.MPESA_PASS_KEY || "";
-    console.log("Business Short Code:", BUSINESS_SHORT_CODE,"PASS_KEY",PASS_KEY);
+    const CALLBACK_URL = process.env.MPESA_CALLBACK_URL || ""; // Use a static callback URL
 
-    if (!BUSINESS_SHORT_CODE || !PASS_KEY) {
+    if (!BUSINESS_SHORT_CODE || !PASS_KEY || !CALLBACK_URL) {
       throw new Error("Missing MPESA configuration in environment variables");
     }
 
-    const tunnelUrl = getNgrokUrl();
-    if (!tunnelUrl) {
-      throw new Error("Ngrok tunnel URL not initialized");
-    }
-
-    const CALLBACK_URL = `${tunnelUrl}/payment-callback/`;
-    
-
     const currentTimestamp = timestamp(); // Must return 'YYYYMMDDHHMMSS'
-
     const password = Buffer.from(
       BUSINESS_SHORT_CODE + PASS_KEY + currentTimestamp
     ).toString("base64");  
@@ -71,7 +61,5 @@ const handleStkPush = async (req: RequestExtended, res: Response) => {
     });
   }
 };
-
-
 
 export { handleStkPush };
