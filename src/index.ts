@@ -1,29 +1,35 @@
-
-import express, { Request, Response } from "express";
+// index.ts
+import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import router from "./routes/lipaRoute";
-const ngrok = require('ngrok');
-let tokken = "";
+import { initializeNgrok } from "../utils/ngrokManager";
+import serverless from "serverless-http";
 
 dotenv.config();
+
 const app = express();
-const PORT = process.env.PORT || 5001;
+const PORT = Number(process.env.PORT) || 5001;
 
-// initialize ngrok using the following function
+(async () => {
+  // Initialize Ngrok and get the tunnel URL
+  const tunnelUrl = await initializeNgrok(PORT);
+  console.log(`Ngrok tunnel is available at: ${tunnelUrl}`);
+})();
 
-
-
-//middlewares
+// Middleware setup
 app.use(express.json());
 app.use(cors());
 
+// Test endpoint
 app.get("/", (req, res) => {
-  res.send("Darajaa API payment gateway");
+  res.send("Daraja API payment gateway");
 });
-app.use("/lipa", router)
 
+// Routes
+app.use("/lipa", router);
 
+export const handler = serverless(app);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
