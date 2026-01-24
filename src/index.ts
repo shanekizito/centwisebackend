@@ -1,29 +1,43 @@
-// index.ts
+import "express-async-errors";
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
+import { config } from "./config";
 import router from "./routes/lipaRoute";
+import { errorHandler } from "./middlewares/errorHandler";
+import logger from "./utils/logger";
 import serverless from "serverless-http";
 
-dotenv.config();
-
 const app = express();
-const PORT = Number(process.env.PORT) || 5001;
 
-// Middleware setup
 app.use(express.json());
 app.use(cors());
 
-// Test endpoint
-app.get("/", (req, res) => {
-  res.send("Daraja API payment gateway");
+// Request logging middleware
+app.use((req, res, next) => {
+  logger.info(`${req.method} ${req.path}`, {
+    body: req.body,
+    query: req.query,
+  });
+  next();
+});
+
+// Health check
+app.get("/health", (req, res) => {
+  res.json({ status: "ok", timestamp: new Date().toISOString() });
 });
 
 // Routes
 app.use("/lipa", router);
 
+// Centralized Error Handling
+app.use(errorHandler);
+
 export const handler = serverless(app);
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+if (config.NODE_ENV !== "test") {
+  app.listen(config.PORT, () => {
+    logger.info(`🚀 Server is running on port ${config.PORT}`);
+  });
+}
+
+export default app;
